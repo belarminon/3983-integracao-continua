@@ -13,16 +13,24 @@ var (
 	err	error
 )
 
+func getEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
 func ConectaComBancoDeDados() {
-	host := os.Getenv("DB_HOST")
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	dbname := os.Getenv("DB_NAME")
-	port := os.Getenv("DB_PORT")
+	host := getEnv("DB_HOST", "localhost")
+	user := getEnv("DB_USER", "root")
+	password := getEnv("DB_PASSWORD", "root")
+	dbname := getEnv("DB_NAME", "root")
+	port := getEnv("DB_PORT", "5432")
 	conectionString := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable"
 	DB, err = gorm.Open(postgres.Open(conectionString))
 	if err != nil {
-		log.Panic("Erro ao conectar com banco de dados")
+		log.Panicf("Erro ao conectar com banco de dados: %v", err)
 	}
 
 	_ = DB.AutoMigrate(&models.Aluno{})
