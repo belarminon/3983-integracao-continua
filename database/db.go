@@ -8,19 +8,19 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	DB  *gorm.DB
-	err error
+var (	
+	DB	*gorm.DB
+	err	error
 )
 
 func ConectaComBancoDeDados() {
-	endereco := os.Getenv("DB_HOST")
-	usuario := os.Getenv("DB_USER")
-	senha := os.Getenv("DB_PASSWORD")
-	nomeBanco := os.Getenv("DB_NAME")
-	portaBanco := os.Getenv("DB_PORT")
-	stringDeConexao := "host=" + endereco + " user=" + usuario + " password=" + senha + " dbname=" + nomeBanco + " port=" + portaBanco + " sslmode=disable"
-	DB, err = gorm.Open(postgres.Open(stringDeConexao))
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
+	conectionString := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable"
+	DB, err = gorm.Open(postgres.Open(conectionString))
 	if err != nil {
 		log.Panic("Erro ao conectar com banco de dados")
 	}
