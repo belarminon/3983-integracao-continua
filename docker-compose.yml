@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: "postgres"
+    image: postgres
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
